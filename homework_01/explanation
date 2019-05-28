@@ -1,6 +1,5 @@
-The function removeNum affects the event loop because it's executed asynchronously. When the promise object is fulfilled,
-it will add its callback to the callback queue so when the stack is empty, it will call this callback from the queue and 
-put it in the stack.
+The function removeNum affects the event loop because it is executed asynchronously. 
+When the Promise object is fulfilled, it will add its callback to the callback queue. 
+When the stack is empty, it will push this callback in the stack.
 
-All the functions are asynchronous because the fetch api makes the calls asynchronous, as well as the other two, 
-when using async and await, and reactive programming
+All the functions are asynchronous because the fetch api makes asynchronous call and returns a Promise.
