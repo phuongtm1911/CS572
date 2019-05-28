@@ -23,7 +23,7 @@ console.log('Finish');
 function promise() {
   const p = fetch("https://randomuser.me/api/");
   p.then(data => data.json())
-  .then(data => console.log(data))
+  .then(data => console.log(data.results.map(obj => {obj.name, obj.location}))
   .catch((err) => console.error(err));
 
   
@@ -32,7 +32,7 @@ function promise() {
 async function asyncFunc() {
   try {
     let result = await fetch("https://randomuser.me/api/");
-    console.log(result.json());
+    console.log(result.json().results.map(obj => {obj.name, obj.location}));
   } catch (err) {
     console.error(err);
   } 
@@ -41,5 +41,5 @@ async function asyncFunc() {
 function reactjs() {
   const { from } = rxjs;
   p = fetch("https://randomuser.me/api/");
-  from(p).subscribe((data) => console.log(data.json()));
+  from(p).subscribe((data) => console.log(data.json().results.map(obj => {obj.name, obj.location})));
 }
