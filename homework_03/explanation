@@ -1,0 +1,3 @@
+readFile() reads the content of a file asynchronously and buffers the entire file
+readFileSync()	is the same as readFile(), but synchronous instead of asynchronous so it blocks execution until finished
+createReadStream() returns a new stream object and it reads sequentially from the current file position. It can provide better performance
