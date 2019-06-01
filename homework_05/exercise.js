@@ -14,6 +14,7 @@ app.get('/users', function(req, res) {
         .pipe(shareReplay(1));
     observer.subscribe(data => {
         res.set("Cache-Control", "private, max-age=86400");
+        res.set('Link', 'https://randomuser.me/api/?results=10;rel="first"');
         res.json(data);
     });
     res.end();
