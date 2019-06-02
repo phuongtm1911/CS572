@@ -1,10 +1,12 @@
 var express = require('express');
 var cors = require('cors');
+var morgan = require('morgan');
+var fs = require('fs');
+var path = require('path');
 
 var app = express();
 
-app.use(express.json());
-app.use(cors());
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 
 var grades = [{
     id: 1,
@@ -13,11 +15,15 @@ var grades = [{
     grade: 95
 }];
 
-app.get('https://example.com/comments', (req, res, next) => {
+app.use(morgan('combined', { stream: accessLogStream }));
+app.use(express.json());
+app.use(cors());
+
+app.get('/grades', (req, res, next) => {
     res.status(200).send(grades);
 });
 
-app.get('https://example.com/comments/:id', (req, res, next) => {
+app.get('/grades/:id', (req, res, next) => {
     for (var i = 0; i < grades.length; i++) {
         if (req.params.id === grades[i].id) {
             res.status(200).send(grades[i]);
@@ -25,18 +31,13 @@ app.get('https://example.com/comments/:id', (req, res, next) => {
     }
 });
 
-app.post('https://example.com/comments', (req, res, next) => {
-    var grade = {
-        id: grades.length,
-        name: req.params.name,
-        course: req.params.course,
-        grade: req.params.grade
-    };
+app.post('/grades', (req, res, next) => {
+    var grade = req.body;
     grades.push(grade);
     res.status(201).send();
 });
 
-app.delete('https://example.com/comments/:id', (req, res, next) => {
+app.delete('/grades/:id', (req, res, next) => {
     for (var i = 0; i < grades.length; i++) {
         if (req.params.id === grades[i].id) {
             grades.splice(i, 1);
@@ -44,3 +45,5 @@ app.delete('https://example.com/comments/:id', (req, res, next) => {
         }
     }
 });
+
+app.listen(8080);
