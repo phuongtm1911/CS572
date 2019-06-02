@@ -18,17 +18,19 @@ var grades = [{
 app.use(morgan('combined', { stream: accessLogStream }));
 app.use(express.json());
 app.use(cors());
+app.use('/grades/:id', (req, res, next) => {
+    const id = Number(req.params.id);
+    const index = grades.findIndex(grade => grade.id === id);
+    req.index = index;
+    next();
+  });
 
 app.get('/grades', (req, res, next) => {
     res.status(200).send(grades);
 });
 
 app.get('/grades/:id', (req, res, next) => {
-    for (var i = 0; i < grades.length; i++) {
-        if (req.params.id === grades[i].id) {
-            res.status(200).send(grades[i]);
-        }
-    }
+    res.send(grades[req.index]);
 });
 
 app.post('/grades', (req, res, next) => {
@@ -38,12 +40,8 @@ app.post('/grades', (req, res, next) => {
 });
 
 app.delete('/grades/:id', (req, res, next) => {
-    for (var i = 0; i < grades.length; i++) {
-        if (req.params.id === grades[i].id) {
-            grades.splice(i, 1);
-            res.status(200).send();
-        }
-    }
+    grades.splice(req.index, 1);
+    res.status(200).send();
 });
 
 app.listen(8080);
