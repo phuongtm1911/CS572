@@ -1,0 +1,14 @@
+books {
+    _id,
+    title,
+    isbn,
+    author,
+    tags
+}
+
+checkouts {
+    _id,
+    student,
+    book,
+    dueDate
+}
