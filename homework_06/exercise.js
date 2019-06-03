@@ -21,9 +21,22 @@ app.use(cors());
 app.use('/grades/:id', (req, res, next) => {
     const id = Number(req.params.id);
     const index = grades.findIndex(grade => grade.id === id);
-    req.index = index;
-    next();
-  });
+    if (Number(index) === -1) {
+        return res.status(404).send('Student not found');
+    } else {
+        req.index = index;
+        next();
+    }
+});
+
+var isJSON = (req, res, next) => {
+    try {
+        JSON.parse(req.body);
+        next();
+    } catch (e) {
+        return res.status(400).send('Invalid request');
+    }
+};
 
 app.get('/grades', (req, res, next) => {
     res.status(200).send(grades);
@@ -33,7 +46,7 @@ app.get('/grades/:id', (req, res, next) => {
     res.send(grades[req.index]);
 });
 
-app.post('/grades', (req, res, next) => {
+app.post('/grades', isJSON, (req, res, next) => {
     var grade = req.body;
     grades.push(grade);
     res.status(201).send();
