@@ -1,0 +1,30 @@
+books {
+    _id,
+    title,
+    isbn,
+    author,
+    tags,
+    copies,
+    isAvailable
+}
+
+checkouts {
+    _id,
+    student,
+    book,
+    dueDate
+}
+
+students {
+    _id,
+    student_id,
+    name,
+    email,
+    phone,
+    address
+}
+
+Create indexes
+- isAvailable for the collection books
+- student_id for the collection students
+- dueDate for the collection checkouts
