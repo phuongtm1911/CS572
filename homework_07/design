@@ -3,7 +3,9 @@ books {
     title,
     isbn,
     author,
-    tags
+    tags,
+    copies,
+    isAvailable
 }
 
 checkouts {
@@ -11,4 +13,13 @@ checkouts {
     student,
     book,
     dueDate
+}
+
+students {
+    _id,
+    student_id,
+    name,
+    email,
+    phone,
+    address
 }
