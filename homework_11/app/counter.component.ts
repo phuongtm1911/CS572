@@ -1,20 +1,19 @@
-import { Component, Output, Input, EventEmitter, OnInit } from '@angular/core';
+import { Component,  OnInit, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-counter',
   template: `<div style="text-align:center">
-                <button (click)="decrease()">-</button>
-                {{counterValue}}
-                <button (click)="increase()">+</button>
-              </div>`,
-  styleUrls: ['./counter.component.css']
+              <button (click)="decrease()">-</button>
+              {{counter}}
+              <button (click)="increase()">+</button>
+            </div>`,
+  styles: []
 })
-export class CounterComponent implements OnInit {
-  ngOnInit(): void {
-    throw new Error("Method not implemented.");
-  } 
 
-  counterValue: number;
+export class CounterComponent implements OnInit { 
+
+  counterValue: number = 0;
+  
   @Input() public counter;
   @Output() public counterChange = new EventEmitter();
   
@@ -23,15 +22,19 @@ export class CounterComponent implements OnInit {
   }
 
   increase() {
-    this.counterValue++;
-    this.counter = this.counterValue;
-    this.counterChange.emit(this.counterValue);
+    // this.counterValue++;
+    this.counter++;
+    this.counterChange.emit(this.counter);
   }
 
   decrease() {
-    this.counterValue--;
-    this.counter = this.counterValue;
-    this.counterChange.emit(this.counterValue);
+    // this.counterValue--;
+    this.counter--;
+    this.counterChange.emit(this.counter);
   }
+
+  ngOnInit(): void {
+
+  } 
 
 }
