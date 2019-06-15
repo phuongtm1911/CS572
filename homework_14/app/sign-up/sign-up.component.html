@@ -1,0 +1,13 @@
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  <label for="username">Username</label>
+  <input type="text" class="form-control" id="username" formControlName="username">
+  <label for="email">E-Mail</label>
+  <input type="text" class="form-control" id="email" formControlName="email">
+  <div *ngIf="!signUpForm.get('email').valid">
+    Invalid Email
+  </div>
+  <label for="password">Password</label>
+  <input type="text" class="form-control" id="password" formControlName="password">
+  <label for="confirmPassword">Confirm Password</label>
+  <input type="text" class="form-control" id="confirmPassword" formControlName="confirmPassword">
+</form>
